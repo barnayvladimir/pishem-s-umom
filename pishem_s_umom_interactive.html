@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>✨ ПИШЕМ С УМОМ ✨</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #ffdde1, #ee9ca7);
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 40px 20px;
+      position: relative;
+    }
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 30px;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .task-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 20px 25px;
+      margin: 25px auto;
+      max-width: 800px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      text-align: left;
+      animation: fadeIn 0.8s ease;
+    }
+    .task-card h2 {
+      margin-bottom: 10px;
+      font-size: 22px;
+      color: #ff4d6d;
+    }
+    .task-card p {
+      font-size: 16px;
+    }
+    .task-card ol {
+      padding-left: 20px;
+      margin: 15px 0;
+    }
+    .task-card .tip {
+      background: #fff5cc;
+      border-left: 6px solid #ffc107;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 15px 0;
+      font-size: 14px;
+    }
+    .start-button {
+      display: block;
+      margin: 15px auto 0 auto;
+      background: linear-gradient(90deg, #ff4d6d, #ff758c);
+      color: white;
+      font-size: 16px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .start-button:hover {
+      transform: scale(1.05);
+    }
+    .footer {
+      margin-top: 50px;
+      font-size: 14px;
+      text-align: center;
+      color: #fff;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    /* Модалка */
+    #task-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 9999;
+      overflow-y: auto;
+    }
+    #task-modal .modal-content {
+      background: white;
+      padding: 30px;
+      max-width: 800px;
+      margin: 60px auto;
+      border-radius: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      position: relative;
+      transform: scale(0.8);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    #task-modal.show .modal-content {
+      transform: scale(1);
+      opacity: 1;
+    }
+    #task-modal button.close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #ff6b6b;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    textarea {
+      width: 100%;
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      resize: vertical;
+      margin-top: 10px;
+    }
+    /* Конфетти */
+    .confetti {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      top: -10px;
+      animation: fall 5s linear infinite;
+    }
+    @keyframes fall {
+      from { transform: translateY(-100px) rotate(0deg); }
+      to { transform: translateY(100vh) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>✨ ПИШЕМ С УМОМ ✨</h1>
+
+    <div class="task-card">
+      <h2>🦸‍♀️ ЗАДАНИЕ 1: СУПЕР-РЕДАКТОР</h2>
+      <p>Стань супергероем письменной речи! Используй ИИ как супер-силу для улучшения текста ✨</p>
+      <ol>
+        <li>Напиши небольшой рассказ о самом интересном дне (10–15 предложений) ✍️</li>
+        <li>Попроси ИИ проверить твой текст и предложить 5 улучшений 🔍</li>
+        <li>Выбери сам — какие улучшения принять, а какие отклонить 🤔</li>
+        <li>Запиши в дневник, какие новые приёмы письма ты узнал 📖</li>
+      </ol>
+      <div class="tip">💡 <b>СУПЕР-СОВЕТ:</b> Не соглашайся со всеми правками ИИ — иногда твой вариант лучше передаёт личность 😎</div>
+      <button class="start-button" onclick="openTask(1)">НАЧАТЬ ЗАДАНИЕ 🚀</button>
+    </div>
+
+    <div class="task-card">
+      <h2>🧙‍♂️ ЗАДАНИЕ 2: МАСТЕР ИСТОРИЙ</h2>
+      <p>Создай невероятную историю с помощью волшебных подсказок от ИИ ✨</p>
+      <ol>
+        <li>Попроси ИИ предложить 3 персонажа и 3 места действия 🎲</li>
+        <li>Выбери любимого героя и локацию ✅</li>
+        <li>Придумай проблему, с которой он столкнётся 🤯</li>
+        <li>Напиши историю — ИИ дал начало, а ты создаёшь шедевр! ✨</li>
+      </ol>
+      <div class="tip">🌟 <b>ВОЛШЕБНЫЙ СОВЕТ:</b> Добавь неожиданный поворот — читатели будут в восторге! 🌟</div>
+      <button class="start-button" onclick="openTask(2)">НАЧАТЬ ЗАДАНИЕ 🚀</button>
+    </div>
+
+    <div class="task-card">
+      <h2>🕵️‍♀️ ЗАДАНИЕ 3: ДЕТЕКТИВ ОШИБОК</h2>
+      <p>Стань настоящим языковым детективом и помоги ИИ найти ошибки! 🔎</p>
+      <ol>
+        <li>ИИ даст тебе текст с ошибками 📝</li>
+        <li>Найди и исправь их 👀</li>
+        <li>Сравни с подсказкой от ИИ 📊</li>
+        <li>Сделай выводы о частых ошибках ✍️</li>
+      </ol>
+      <div class="tip">🔑 <b>СОВЕТ:</b> Ошибки бывают хитрыми — внимательность твой лучший инструмент! 🔑</div>
+      <button class="start-button" onclick="openTask(3)">НАЧАТЬ ЗАДАНИЕ 🚀</button>
+    </div>
+
+    <div class="task-card">
+      <h2>🎤 ЗАДАНИЕ 4: РАССКАЗЧИК</h2>
+      <p>Попробуй себя в роли рассказчика — твой голос услышат! 🎙️</p>
+      <ol>
+        <li>Напиши короткий рассказ 📝</li>
+        <li>Попроси ИИ предложить улучшения 🧠</li>
+        <li>Прочитай свой текст вслух 🎧</li>
+        <li>Сделай выводы, как звучит твоя речь ✨</li>
+      </ol>
+      <div class="tip">🎶 <b>СОВЕТ:</b> Улыбка в голосе делает рассказ живее! 🎶</div>
+      <button class="start-button" onclick="openTask(4)">НАЧАТЬ ЗАДАНИЕ 🚀</button>
+    </div>
+
+    <div class="task-card">
+      <h2>📖 ЗАДАНИЕ 5: КНИЖНЫЙ ГИД</h2>
+      <p>Открой новые миры вместе с ИИ и книжными героями! 📚</p>
+      <ol>
+        <li>Попроси ИИ предложить 5 книжных персонажей 🤓</li>
+        <li>Выбери того, кто нравится тебе больше всего ❤️</li>
+        <li>Придумай, как он попал в наш мир 🌍</li>
+        <li>Напиши мини-историю о его приключениях 🖋️</li>
+      </ol>
+      <div class="tip">✨ <b>СОВЕТ:</b> Представь, как персонаж поведёт себя в твоём городе или школе — это очень весело! ✨</div>
+      <button class="start-button" onclick="openTask(5)">НАЧАТЬ ЗАДАНИЕ 🚀</button>
+    </div>
+
+    <div class="footer">
+      <p>© 2025 Супер-крутой сборник "Пишем с умом: ИИ как помощник" 💫</p>
+      <p>Создано с любовью к творчеству и письму! ❤️</p>
+    </div>
+  </div>
+
+  <!-- Модальное окно -->
+  <div id="task-modal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">✕</button>
+      <div id="task-content"></div>
+    </div>
+  </div>
+
+  <script>
+    function createConfetti() {
+      const colors = ['#ff9a9e','#a18cd1','#fad0c4','#ffd1ff','#fbc2eb'];
+      for (let i = 0; i < 20; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 5000);
+      }
+    }
+    function openTask(taskNumber) {
+      createConfetti();
+      const modal = document.getElementById('task-modal');
+      const content = document.getElementById('task-content');
+      let taskHtml = '';
+      if (taskNumber === 1) {
+        taskHtml = `
+          <h2>🦸‍♀️ Супер-редактор</h2>
+          <p>Напиши рассказ (10–15 предложений):</p>
+          <textarea rows="10" id="story1" placeholder="Мой рассказ..."></textarea>
+          <button class="start-button" onclick="checkWithAI(1)">Проверить ИИ 🤖</button>
+          <div id="ai-feedback1" style="margin-top:15px;"></div>`;
+      } else if (taskNumber === 2) {
+        taskHtml = `
+          <h2>🧙‍♂️ Мастер историй</h2>
+          <button class="start-button" onclick="generateStoryElements()">Сгенерировать 🎲</button>
+          <div id="story-elements" style="margin-top:15px;"></div>`;
+      } else if (taskNumber === 3) {
+        taskHtml = `
+          <h2>🕵️‍♀️ Детектив ошибок</h2>
+          <p><i>"Он вчера ходить в магазин и купил много яблоки."</i></p>
+          <textarea rows="5" id="fix3" placeholder="Твой исправленный текст..."></textarea>
+          <button class="start-button" onclick="checkWithAI(3)">Проверить ИИ 🤖</button>
+          <div id="ai-feedback3" style="margin-top:15px;"></div>`;
+      } else if (taskNumber === 4) {
+        taskHtml = `
+          <h2>🎤 Рассказчик</h2>
+          <textarea rows="8" id="story4" placeholder="Мой рассказ..."></textarea>
+          <button class="start-button" onclick="checkWithAI(4)">Проверить ИИ 🤖</button>
+          <div id="ai-feedback4" style="margin-top:15px;"></div>`;
+      } else if (taskNumber === 5) {
+        taskHtml = `
+          <h2>📖 Книжный гид</h2>
+          <button class="start-button" onclick="generateCharacters()">Сгенерировать персонажей 📚</button>
+          <div id="char-list" style="margin-top:15px;"></div>
+          <textarea rows="6" id="story5" placeholder="Твоя история..."></textarea>
+          <button class="start-button" onclick="checkWithAI(5)">Проверить ИИ 🤖</button>
+          <div id="ai-feedback5" style="margin-top:15px;"></div>`;
+      }
+      content.innerHTML = taskHtml;
+      modal.style.display = 'block';
+      modal.classList.add('show');
+    }
+    function closeModal() {
+      const modal = document.getElementById('task-modal');
+      modal.style.display = 'none';
+      modal.classList.remove('show');
+    }
+    function checkWithAI(taskNumber) {
+      const advices1 = [
+        "Добавь больше деталей про эмоции.",
+        "Избегай повторяющихся слов.",
+        "Используй связки: затем, после этого, вскоре.",
+        "Попробуй добавить диалог.",
+        "Опиши погоду или место действия для атмосферы."
+      ];
+      const advices4 = [
+        "Начни с самого интересного события.",
+        "Добавь больше диалогов для динамики.",
+        "Опиши ощущения героя: запахи, звуки, эмоции.",
+        "Сделай финал неожиданным.",
+        "Используй яркие прилагательные."
+      ];
+      if (taskNumber === 1) {
+        const feedback = advices1.sort(() => 0.5 - Math.random()).slice(0,3).join("\n");
+        document.getElementById('ai-feedback1').innerText = "ИИ советует:\n" + feedback;
+      } else if (taskNumber === 3) {
+        document.getElementById('ai-feedback3').innerText =
+          "Правильный вариант: 'Он вчера ходил в магазин и купил много яблок.'\nОшибка: неверная форма глагола 'ходить' и существительного 'яблоки'.";
+      } else if (taskNumber === 4) {
+        const feedback = advices4.sort(() => 0.5 - Math.random()).slice(0,3).join("\n");
+        document.getElementById('ai-feedback4').innerText = "ИИ предлагает:\n" + feedback;
+      } else if (taskNumber === 5) {
+        document.getElementById('ai-feedback5').innerText =
+          "Совет ИИ: Представь, как выбранный герой удивляется современным технологиям или встречает новых друзей.";
+      }
+    }
+    function generateStoryElements() {
+      const characters = ["🐉 Дракон", "🤖 Робот", "🧚 Фея", "🦸 Герой", "👽 Инопланетянин"];
+      const places = ["🏰 Замок", "🌌 Космос", "🌳 Лес", "🏙️ Город", "🏝️ Остров"];
+      const char = characters[Math.floor(Math.random() * characters.length)];
+      const place = places[Math.floor(Math.random() * places.length)];
+      document.getElementById('story-elements').innerHTML =
+        `<p>Твои элементы: <b>${char}</b> + <b>${place}</b></p>`;
+    }
+    function generateCharacters() {
+      const chars = ["🧙 Гарри Поттер","🧝 Леголас","🕵️‍♂️ Шерлок Холмс","🧟 Франкенштейн","👸 Золушка","🐉 Смауг","⚔️ Дон Кихот"];
+      const selected = chars.sort(() => 0.5 - Math.random()).slice(0,5);
+      document.getElementById('char-list').innerHTML =
+        "<ul>" + selected.map(c => "<li>" + c + "</li>").join("") + "</ul>";
+    }
+  </script>
+</body>
+</html>
